@@ -1,0 +1,92 @@
+Ix = 0.0034; %kg*m^2
+Iy = 0.0034; %kg*m^2
+Iz  = 0.006; %kg*m^2
+m  = 0.698; %kg
+g  = 9.81; %m/s^2
+Jtp=1.302*10^(-6); %N*m*s^2=kg*m^2
+Ts=0.1; %s
+
+% Matrix weights for the cost function (They must be diagonal)
+Q=[10 0 0;0 10 0;0 0 10]; % weights for outputs (output x output)
+S=[20 0 0;0 20 0;0 0 20]; % weights for the final horizon outputs (output x output)
+R=[10 0 0;0 10 0;0 0 10]; % weights for inputs (input x input)
+
+ct = 7.6184*10^(-8)*(60/(2*pi))^2; %N*s^2
+cq = 2.6839*10^(-9)*(60/(2*pi))^2; %N*m^2
+l = 0.171; %m;
+
+controlled_states=3;
+hz = 4; % horizon period
+
+% Input bounds:
+lb=-0.1;
+ub=0.1;
+
+innerDyn_length=4; % Number of inner control loop iterations
+
+px=[-1+0j -2+0j];
+py=[-1+0j -2+0j];
+pz=[-1+0j -2+0j];
+
+Files:
+Initial conditions
+Trajectory Generator
+position controller
+discrete plant
+Mpc simplification
+non-linear drone model
+	new states, runge kutta
+	
+	
+t = 0:Ts*innerDyn_length:100;
+t_angles=(0:Ts:t(end))';
+r = 2;
+f=0.025;
+height_i=5;
+height_f=25;
+[X_ref,X_dot_ref,Y_ref,Y_dot_ref,Z_ref,Z_dot_ref,psi_ref]=trajectory_generator(t,r,f,height_i,height_f);
+plotl=length(t); % Number of outer control loop iterations
+
+
+%% Load the initial state vector
+
+ut=0;
+vt=0;
+wt=0;
+pt=0;
+qt=0;
+rt=0;
+xt=0;%X_ref(1,2); % Initial translational position
+yt=-1;%Y_ref(1,2); % Initial translational position
+zt=0;%Z_ref(1,2); % Initial translational position
+phit=0;    % Initial angular position
+thetat=0;  % Initial angular position
+psit=psi_ref(1,2);    % Initial angular position
+
+states=[ut,vt,wt,pt,qt,rt,xt,yt,zt,phit,thetat,psit];
+states_total=states;
+
+% Assume that first Phi_ref, Theta_ref, Psi_ref are equal to the first
+% phit, thetat, psit
+ref_angles_total=[phit,thetat,psit];
+velocityXYZ_total=[X_dot_ref(1,2),Y_dot_ref(1,2),Z_dot_ref(1,2)];
+%% Initial drone state
+
+omega1=110*pi/3; % rad/s at t = -1 s
+omega2=110*pi/3; % rad/s at t = -1 s
+omega3=110*pi/3; % rad/s at t = -1 s
+omega4=110*pi/3; % rad/s at t = -1 s
+
+ct = constants{11};
+cq = constants{12};
+l  = constants{13};
+
+U1=ct*(omega1^2+omega2^2+omega3^2+omega4^2); % Input at t = -1 s
+U2=ct*l*(omega4^2-omega2^2); % Input at t = -1 s
+U3=ct*l*(omega3^2-omega1^2); % Input at t = -1 s
+U4=cq*(-omega1^2+omega2^2-omega3^2+omega4^2); % Input at t = -1 s
+
+UTotal=[U1,U2,U3,U4];% 4 inputs
+
+global omega_total
+omega_total=-omega1+omega2-omega3+omega4;
