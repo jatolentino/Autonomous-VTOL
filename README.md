@@ -5,7 +5,7 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/jatolentino/Autonomous-VTOL?color=success&logo=CodersRank&logoColor=%23FFFFFF)
 [![version](https://img.shields.io/badge/version-1.1-red.svg)](//npmjs.com/package/Autonomous-VTOL)
 
-Based on my last research paper in 2021:
+Based on my last research paper in 2022:
 
-> LPV-MPC control and self-tuning feedback gains for the trajectory tracking of a quadcopter UAV
+> Control Design for a multi-rotor VTOL enhanced by a Gradient Descent algorithm to optimize the position tracking
 > https://ieeexplore.ieee.org/document/9708830
