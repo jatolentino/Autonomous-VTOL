@@ -8,5 +8,5 @@
 Based on my last research paper in 2022:
 
 > Control Design for a multi-rotor VTOL enhanced by a Gradient Descent algorithm to optimize the position tracking
->
+> 
 > https://ieeexplore.ieee.org/document/9708830
