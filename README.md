@@ -45,6 +45,8 @@
 
 In this work, we present a Feedback Control (FC) and a Model Predictive Control (MPC) system for a miniaturized multi-rotor vertical takeoff and landing aircraft designed to track a desired path. The latter approach is optimized using a machine learning (ML) algorithm integrated into the feedback controller, which provides a set of tuned gains that enhance position tracking in the presence of disturbances. These disturbances may arise from wind affecting the aircraft’s surfaces or from a reduction in waypoints, resulting in greater distances between reference points
 
+<br/>
+
 <img src="sources/images/concise.svg" />
 
 <br/>
