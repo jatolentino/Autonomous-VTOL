@@ -50,6 +50,7 @@ In this work, we present a Feedback Control (FC) and a Model Predictive Control 
 <br/>
 <br/>
 
+![software-VTOL](https://github.com/user-attachments/assets/e73158f9-a78c-443d-8e46-c91f6f0a9a1a)
 
 
 ---
